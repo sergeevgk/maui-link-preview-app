@@ -2,11 +2,12 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
+using CommunityToolkit.Mvvm.Input;
 using LinkPreviewApp.Services;
 
 namespace LinkPreviewApp;
 
-public class LinkPreviewCollectionViewModel : INotifyPropertyChanged
+public partial class LinkPreviewCollectionViewModel : INotifyPropertyChanged
 {
 	private readonly IUrlDataService _urlDataService;
 
@@ -54,6 +55,20 @@ public class LinkPreviewCollectionViewModel : INotifyPropertyChanged
 			};
 
 			LinkPreviews.Add(linkPreview);
+		}
+	}
+
+	[RelayCommand]
+	private async Task ClickLinkPreview(LinkPreviewModel item)
+	{
+		try
+		{
+			Uri uri = new Uri(item.Url);
+			await Browser.Default.OpenAsync(uri, BrowserLaunchMode.SystemPreferred);
+		}
+		catch (Exception ex)
+		{
+			// An unexpected error occurred. No browser may be installed on the device.
 		}
 	}
 

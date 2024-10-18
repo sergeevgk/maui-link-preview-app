@@ -12,7 +12,7 @@
 
 			<Label 
 				x:Name="urlPreviewText"
-				Text="Here go the link previews"
+				Text="Link previews:"
 				Style="{StaticResource SubHeadline}"
 				SemanticProperties.HeadingLevel="Level1"
 				SemanticProperties.Description="Headline"
@@ -20,17 +20,27 @@
 				/>
 
 			<CollectionView 
-				ItemsSource="{Binding LinkPreviews}" >
+				ItemsSource="{Binding LinkPreviews}" 
+				SelectionMode="Single" x:Name="LinkPreviewItemsCollectionView"
+				SelectionChangedCommand="{Binding ClickLinkPreviewCommand}" 
+				SelectionChangedCommandParameter="{Binding SelectedItem, Source={x:Reference LinkPreviewItemsCollectionView}}">
 				<CollectionView.ItemTemplate>
 					<DataTemplate>
 						<local:LinkPreviewItemTemplate />
 					</DataTemplate>
 				</CollectionView.ItemTemplate>
+				<CollectionView.EmptyView>
+					<!--  Empty LinkPreview list  -->
+					<Label
+					HorizontalTextAlignment="Center"
+					Text="No items added yet"
+					VerticalTextAlignment="Center" />
+				</CollectionView.EmptyView>
 			</CollectionView>
 
 			<Label
-				Text="Here goes the URL preview text"
-				SemanticProperties.Description="URL previewer"
+				Text="Put the link for previewing here:"
+				SemanticProperties.Description="URL preview input"
 				/>
 
 			<Editor 
