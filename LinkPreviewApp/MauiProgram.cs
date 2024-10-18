@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using LinkPreviewApp.Services;
+using Microsoft.Extensions.Logging;
 
 namespace LinkPreviewApp
 {
@@ -14,6 +15,13 @@ namespace LinkPreviewApp
 					fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
 					fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
 				});
+
+			builder.Services.AddSingleton<HttpClient>();
+			builder.Services.AddSingleton<IUrlDataService, UrlDataService>();
+			builder.Services.AddTransient<AppShell>();
+			builder.Services.AddTransient<MainPage>();
+			builder.Services.AddTransient<LinkPreviewModel>();
+			builder.Services.AddTransient<LinkPreviewCollectionViewModel>();
 
 #if DEBUG
 			builder.Logging.AddDebug();

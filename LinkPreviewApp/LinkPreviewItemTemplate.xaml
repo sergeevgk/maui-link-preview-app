@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+			xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+			xmlns:models="clr-namespace:LinkPreviewApp"
+			x:Class="LinkPreviewApp.LinkPreviewItemTemplate"
+			x:DataType="models:LinkPreviewModel">
+	<Grid>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="0.2*" />
+			<ColumnDefinition Width="0.4*" />
+			<ColumnDefinition Width="0.2*" />
+			<ColumnDefinition Width="0.2*" />
+		</Grid.ColumnDefinitions>
+		<Label Text="{Binding Image}" />
+		<Label Grid.Column="1" Text="{Binding UrlText}" FontAttributes="Bold" />
+		<Label Grid.Column="2" Text="{Binding Title}" HorizontalTextAlignment="Center" />
+		<Label Grid.Column="3" Text="{Binding Description}" HorizontalTextAlignment="Center" />
+	</Grid>
+</ContentView>
