@@ -1,0 +1,6 @@
+@LinkPreviewApp.ApiService_HostAddress = http://localhost:5041
+
+GET {{LinkPreviewApp.ApiService_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
