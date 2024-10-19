@@ -1,13 +1,28 @@
 ﻿using HtmlAgilityPack;
+using Polly;
+using RestSharp;
+using System.Net;
 
 namespace LinkPreviewApp.Services;
 
 public class UrlDataService : IUrlDataService
 {
-	private readonly HttpClient _httpClient;
+	private readonly RestClient _httpClient;
+	// retry policy options for connections
+	private static int _maxRetryAttempts = 2;
+	private static TimeSpan _pauseBetweenFailures = TimeSpan.FromSeconds(2);
+
 	public UrlDataService()
 	{
-		_httpClient = new HttpClient();
+		var restClientOptions = new RestClientOptions
+		{
+			FollowRedirects = true,
+			Timeout = TimeSpan.FromSeconds(10),
+			UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3"
+		};
+		_httpClient = new RestClient();
+		_httpClient.AddDefaultHeader("Connection", "keep-alive");
+		ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
 	}
 
 	public async Task<UrlData> GetUrlDataAsync(string url)
@@ -16,15 +31,24 @@ public class UrlDataService : IUrlDataService
 		try
 		{
 			// Make an HTTP request to get the page content
-			var response = await _httpClient.GetAsync(url);
-
-			// Get the actual final URL in case of redirects
-			var finalUrl = response.RequestMessage.RequestUri.ToString();
+			var request = new RestRequest(url);
+			var retryPolicy = Policy
+				.HandleResult<RestResponse>(x => !x.IsSuccessful)
+				.WaitAndRetryAsync(_maxRetryAttempts, x => _pauseBetweenFailures, (iRestResponse, timeSpan, retryCount, context) =>
+				{
+					// replace with some real logging
+					Console.WriteLine($"The request failed. HttpStatusCode={iRestResponse.Result.StatusCode}. Waiting {timeSpan} seconds before retry. Number attempt {retryCount}. Uri={iRestResponse.Result.ResponseUri}; RequestResponse={iRestResponse.Result.Content}");
+				});
+			var response = await _httpClient.ExecuteGetAsync(request);
+			var finalUrl = response.ResponseUri?.ToString();
 
 			// Ensure a successful response
-			response.EnsureSuccessStatusCode();
+			if (!response.IsSuccessStatusCode) 
+			{
+				throw new ApplicationException(message: $"{response.StatusCode} {response.ErrorMessage} {response.ErrorException}");
+			}
 
-			var htmlContent = await response.Content.ReadAsStringAsync();
+			var htmlContent = response.Content;
 
 			// Use HtmlAgilityPack to parse the HTML content
 			var htmlDocument = new HtmlDocument();
@@ -41,7 +65,7 @@ public class UrlDataService : IUrlDataService
 			// Extract preview image (og:image or similar)
 			var imageNode = htmlDocument.DocumentNode.SelectNodes("//meta")
 				?.FirstOrDefault(node => node.Attributes["property"]?.Value.ToLower() == "og:image" || node.Attributes["name"]?.Value.ToLower() == "image");
-			var image = imageNode?.Attributes["content"]?.Value ?? placeholderImageValue; // Placeholder image is in Resources, see fallback in template
+			var image = imageNode?.Attributes["content"]?.Value ?? placeholderImageValue; // Placeholder image is in Resources, see LinkPreviewItemTemplate code-behind
 
 			// Extract source (domain)
 			var uri = new Uri(finalUrl);
@@ -53,7 +77,7 @@ public class UrlDataService : IUrlDataService
 		catch (Exception ex)
 		{
 			// Return a failure result (log or handle the exception if needed)
-			return new UrlData(url, "Error", ex.Message, "Unknown", placeholderImageValue); // Placeholder image is in Resources, see fallback in template
+			return new UrlData(url, "Error", ex.Message, "Unknown", placeholderImageValue); // Placeholder image is in Resources, see LinkPreviewItemTemplate code-behind
 		}
 	}
 }

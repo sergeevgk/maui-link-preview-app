@@ -35,7 +35,6 @@
 			Aspect="AspectFill"
 			HeightRequest="100"
 			WidthRequest="100"
-			VerticalOptions="Center"
 			x:Name="LinkPreviewImage"
 			Loaded="Image_Loaded">
 			<Image.Source>
