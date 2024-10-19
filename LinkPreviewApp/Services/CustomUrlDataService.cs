@@ -5,14 +5,14 @@ using System.Net;
 
 namespace LinkPreviewApp.Services;
 
-public class UrlDataService : IUrlDataService
+public class CustomUrlDataService : IUrlDataService
 {
 	private readonly RestClient _httpClient;
 	// retry policy options for connections
 	private static int _maxRetryAttempts = 2;
 	private static TimeSpan _pauseBetweenFailures = TimeSpan.FromSeconds(2);
 
-	public UrlDataService()
+	public CustomUrlDataService()
 	{
 		var restClientOptions = new RestClientOptions
 		{
@@ -43,7 +43,7 @@ public class UrlDataService : IUrlDataService
 			var finalUrl = response.ResponseUri?.ToString();
 
 			// Ensure a successful response
-			if (!response.IsSuccessStatusCode) 
+			if (!response.IsSuccessStatusCode)
 			{
 				throw new ApplicationException(message: $"{response.StatusCode} {response.ErrorMessage} {response.ErrorException}");
 			}
@@ -72,7 +72,9 @@ public class UrlDataService : IUrlDataService
 			var source = uri.Host;
 
 			// Return the extracted data
-			return new UrlData(finalUrl, title, description, source, image);
+			var result = new UrlData(finalUrl, title, description, source, image);
+
+			return result;
 		}
 		catch (Exception ex)
 		{

@@ -17,7 +17,7 @@ namespace LinkPreviewApp
 				});
 
 			builder.Services.AddSingleton<HttpClient>();
-			builder.Services.AddSingleton<IUrlDataService, UrlDataService>();
+			builder.Services.AddSingleton<IUrlDataService, CustomUrlDataService>();
 			builder.Services.AddTransient<AppShell>();
 			builder.Services.AddTransient<MainPage>();
 			builder.Services.AddTransient<LinkPreviewModel>();
