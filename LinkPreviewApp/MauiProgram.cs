@@ -23,6 +23,9 @@ namespace LinkPreviewApp
 			builder.Services.AddTransient<LinkPreviewModel>();
 			builder.Services.AddTransient<LinkPreviewCollectionViewModel>();
 
+			// Read the service url from some env variable?
+
+
 #if DEBUG
 			builder.Logging.AddDebug();
 #endif
