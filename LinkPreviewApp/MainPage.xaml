@@ -20,10 +20,7 @@
 				/>
 
 			<CollectionView 
-				ItemsSource="{Binding LinkPreviews}" 
-				SelectionMode="Single" x:Name="LinkPreviewItemsCollectionView"
-				SelectionChangedCommand="{Binding ClickLinkPreviewCommand}" 
-				SelectionChangedCommandParameter="{Binding SelectedItem, Source={x:Reference LinkPreviewItemsCollectionView}}">
+				ItemsSource="{Binding LinkPreviews}">
 				<CollectionView.ItemTemplate>
 					<DataTemplate>
 						<local:LinkPreviewItemTemplate />
@@ -58,7 +55,6 @@
 
 			<Button 
 				x:Name="previewLinkButton"
-				HeightRequest="30"
 				Text="Preview Link"
 				Command="{ Binding FetchPreviewCommand }"
 				/>

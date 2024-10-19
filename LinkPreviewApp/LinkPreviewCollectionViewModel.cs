@@ -33,14 +33,15 @@ public partial class LinkPreviewCollectionViewModel : INotifyPropertyChanged
 	{
 		try
 		{
-			var preview = await _urlDataService.GetUrlDataAsync(url);
+			var urlData = await _urlDataService.GetUrlDataAsync(url);
 
 			var linkPreview = new LinkPreviewModel
 			{
-				Title = preview.Title,
-				Description = preview.Description,
-				UrlText = preview.Url,
-				Image = preview.Image,
+				Title = urlData.Title,
+				Description = urlData.Description,
+				UrlText = urlData.Url,
+				Image = urlData.Image,
+				Source = urlData.Source
 			};
 
 			LinkPreviews.Add(linkPreview);
@@ -59,7 +60,7 @@ public partial class LinkPreviewCollectionViewModel : INotifyPropertyChanged
 	}
 
 	[RelayCommand]
-	private async Task ClickLinkPreview(LinkPreviewModel item)
+	private async Task TapLinkPreview(LinkPreviewModel item)
 	{
 		try
 		{
@@ -70,6 +71,12 @@ public partial class LinkPreviewCollectionViewModel : INotifyPropertyChanged
 		{
 			// An unexpected error occurred. No browser may be installed on the device.
 		}
+	}
+
+	[RelayCommand]
+	private async Task DeleteLinkPreview(LinkPreviewModel item)
+	{
+		var previewRemoved = LinkPreviews.Remove(item);
 	}
 
 	private bool SetProperty<T>(ref T storage, T value, [CallerMemberName] string propertyName = null)
