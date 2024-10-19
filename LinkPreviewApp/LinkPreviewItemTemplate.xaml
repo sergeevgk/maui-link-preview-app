@@ -35,10 +35,11 @@
 			Aspect="AspectFill"
 			HeightRequest="100"
 			WidthRequest="100"
-			VerticalOptions="Center">
+			VerticalOptions="Center"
+			x:Name="LinkPreviewImage"
+			Loaded="Image_Loaded">
 			<Image.Source>
-				<UriImageSource Uri="{Binding Image}"
-					CacheValidity="00:00:10:00" />
+				<UriImageSource Uri="{Binding Image}" />
 			</Image.Source>
 		</Image>
 

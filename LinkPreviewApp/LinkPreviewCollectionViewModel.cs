@@ -70,6 +70,7 @@ public partial class LinkPreviewCollectionViewModel : INotifyPropertyChanged
 		catch (Exception ex)
 		{
 			// An unexpected error occurred. No browser may be installed on the device.
+			await Shell.Current.DisplayAlert("Alert", "The provided link is invalid", "OK");
 		}
 	}
 
