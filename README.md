@@ -33,3 +33,9 @@ Register on https://www.linkpreview.net/, obtain an API Key and provide it in th
 1. Run the LinkPreviewApp.ApiService
 2. Update the links in the LinkPreviewApp project appsettings.Development.json to use the correct port.
 3. Run the LinkPreviewApp on some emulator or as a Windows Machine app (the app layout is not adjusted to different devices yet).
+
+## Libraries used:
+- [HTML Agility Pack](https://github.com/zzzprojects/html-agility-pack/)
+- [Polly](https://github.com/App-vNext/Polly)
+- [RestSharp](https://github.com/RestSharp/RestSharp)
+- [.NET Community Toolkit](https://github.com/CommunityToolkit/dotnet), [MVVM Toolkit Samples](https://github.com/CommunityToolkit/MVVM-Samples)
