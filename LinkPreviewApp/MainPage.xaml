@@ -5,42 +5,49 @@
 			 x:Class="LinkPreviewApp.MainPage"
 			 Title="LinkPreviewApp">
 
-	<ScrollView>
-		<VerticalStackLayout
-			Padding="30,0"
-			Spacing="25">
-
-			<Label 
+	<Grid RowDefinitions="Auto, *, Auto, Auto, Auto" Padding="30,0" RowSpacing="10">
+		<Label 
+				Grid.Row="0"
 				x:Name="urlPreviewText"
 				Text="Link previews:"
 				Style="{StaticResource SubHeadline}"
 				SemanticProperties.HeadingLevel="Level1"
 				SemanticProperties.Description="Headline"
-				VerticalOptions="EndAndExpand"
 				/>
-
-			<CollectionView 
+		<CollectionView 
+				Grid.Row="1"
+				HeightRequest="{Binding CollectionViewHeight}"
+				VerticalScrollBarVisibility="Default"
+				ItemsUpdatingScrollMode="KeepLastItemInView"
 				ItemsSource="{Binding LinkPreviews}">
-				<CollectionView.ItemTemplate>
-					<DataTemplate>
-						<local:LinkPreviewItemTemplate />
-					</DataTemplate>
-				</CollectionView.ItemTemplate>
-				<CollectionView.EmptyView>
-					<!--  Empty LinkPreview list  -->
-					<Label
+			<CollectionView.ItemTemplate>
+				<DataTemplate>
+					<local:LinkPreviewItemTemplate />
+				</DataTemplate>
+			</CollectionView.ItemTemplate>
+			<CollectionView.EmptyView>
+				<!--  Empty LinkPreview list  -->
+				<Label
 					HorizontalTextAlignment="Center"
 					Text="No items added yet"
-					VerticalTextAlignment="Center" />
-				</CollectionView.EmptyView>
-			</CollectionView>
+					VerticalTextAlignment="Center"
+					/>
+			</CollectionView.EmptyView>
+			<CollectionView.ItemsLayout>
+				<LinearItemsLayout Orientation="Vertical"
+							SnapPointsType="Mandatory"
+							SnapPointsAlignment="End" />
+			</CollectionView.ItemsLayout>
+		</CollectionView>
 
-			<Label
-				Text="Put the link for previewing here:"
+		<Label
+				Grid.Row="2"
+				Text="Put the links for previewing here:"
 				SemanticProperties.Description="URL preview input"
 				/>
 
-			<Editor 
+		<Editor 
+				Grid.Row="3"
 				x:Name="urlInputEditor"
 				AutoSize="Disabled"
 				HeightRequest="100"
@@ -50,15 +57,16 @@
 				Keyboard="Url"
 				MaxLength="500"
 				Placeholder="Input your URL here"
-				Text="{Binding EnteredUrl}" 
+				Text="{Binding EnteredUrl}"
 				/>
 
-			<Button 
+		<Button 
+				Grid.Row="4"
+				Margin="10"
 				x:Name="previewLinkButton"
 				Text="Preview Link"
+				HorizontalOptions="End"
 				Command="{ Binding FetchPreviewCommand }"
 				/>
-		</VerticalStackLayout>
-	</ScrollView>
-
+	</Grid>
 </ContentPage>

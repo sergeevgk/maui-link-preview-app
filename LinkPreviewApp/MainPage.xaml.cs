@@ -1,4 +1,6 @@
-﻿namespace LinkPreviewApp;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+
+namespace LinkPreviewApp;
 
 public partial class MainPage : ContentPage
 {

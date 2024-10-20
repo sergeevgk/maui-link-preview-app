@@ -1,9 +1,9 @@
-﻿using System.Collections.ObjectModel;
+﻿using CommunityToolkit.Mvvm.Input;
+using LinkPreviewApp.Services;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
-using CommunityToolkit.Mvvm.Input;
-using LinkPreviewApp.Services;
 
 namespace LinkPreviewApp;
 
@@ -23,10 +23,18 @@ public partial class LinkPreviewCollectionViewModel : INotifyPropertyChanged
 		set => SetProperty(ref _enteredUrl, value);
 	}
 
+	private int _collectionViewHeight;
+	public int CollectionViewHeight
+	{
+		get => _collectionViewHeight;
+		set => SetProperty(ref _collectionViewHeight, value);
+	}
+
 	public LinkPreviewCollectionViewModel(IUrlDataService urlDataService)
 	{
 		_urlDataService = urlDataService ?? throw new ArgumentNullException(nameof(urlDataService));
 		FetchPreviewCommand = new Command(async () => await FetchPreviewAsync(EnteredUrl));
+		CollectionViewHeight = 430;
 	}
 
 	private async Task FetchPreviewAsync(string url)

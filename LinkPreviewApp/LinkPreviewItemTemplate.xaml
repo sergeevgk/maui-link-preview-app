@@ -3,7 +3,9 @@
 			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
 			 xmlns:app="clr-namespace:LinkPreviewApp"
 			 x:Class="LinkPreviewApp.LinkPreviewItemTemplate"
-			 x:DataType="app:LinkPreviewModel">
+			 x:DataType="app:LinkPreviewModel"
+			 Margin="0,5,0,5"
+			 >
 
 	<!-- Tap/Click Handler responsible for opening a link in the brower. The whole item can be tapped except for the delete button, which overrides this tap -->
 	<ContentView.GestureRecognizers>
@@ -13,10 +15,10 @@
 	</ContentView.GestureRecognizers>
 
 	<!-- Link Preview Item = a grid of image cell, some text cells and a button cell -->
-	<Grid Padding="10" ColumnSpacing="10">
+	<Grid ColumnSpacing="10">
 		<Grid.RowDefinitions>
 			<!-- Delete Button and Title row -->
-			<RowDefinition Height="40"/>
+			<RowDefinition Height="50"/>
 			<RowDefinition Height="Auto"/>
 			<RowDefinition Height="Auto"/>
 		</Grid.RowDefinitions>
@@ -64,6 +66,7 @@
 		<!-- Description of a content, if provided -->
 		<Label Grid.Row="1"
 			Grid.Column="1"
+			Grid.ColumnSpan="2"
 			Text="{Binding Description}"
 			FontSize="Small"
 			LineBreakMode="TailTruncation"
@@ -73,6 +76,7 @@
 		<!-- Link (URL text, trimmed if too long) -->
 		<Label Grid.Row="2"
 			Grid.Column="1"
+			Grid.ColumnSpan="2"
 			Text="{Binding UrlText}"
 			FontSize="Small"
 			LineBreakMode="TailTruncation"
@@ -80,7 +84,7 @@
 			VerticalOptions="End" />
 
 		<!-- Delete button -->
-		<Button Grid.RowSpan="1"
+		<Button
 			Grid.Column="2"
 			ImageSource="icon_32_cancel.png"
 			CornerRadius="10"
