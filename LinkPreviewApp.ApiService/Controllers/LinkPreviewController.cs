@@ -1,5 +1,6 @@
 using LinkPreviewApp.ApiService.Services;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 using System.Text.Json;
 
 namespace LinkPreviewApp.ApiService.Controllers
@@ -26,7 +27,7 @@ namespace LinkPreviewApp.ApiService.Controllers
 			if (!isValidUri)
 			{
 				_logger.LogError($"Error during url validaition {url}");
-				return BadRequest($"Url {url} is not a valid URL.");
+				return BadRequest(new { Error = StatusCodes.Status400BadRequest, Description = $"Url {url} is not a valid URL." });
 			}
 
 			UrlData result = null;
@@ -41,7 +42,7 @@ namespace LinkPreviewApp.ApiService.Controllers
 			catch (Exception ex)
 			{
 				_logger.LogCritical($"Error processing the request for url {url}. {ex.Message}");
-				return Problem($"{url}, {ex.Message}", statusCode: StatusCodes.Status500InternalServerError);
+				return new ObjectResult(new { Error = StatusCodes.Status500InternalServerError, Description = $"{url}, {ex.Message}" });
 			}
 
 			return Ok(result);

@@ -42,12 +42,14 @@ public class BackendUrlDataService : IUrlDataService
 
 			if (!response.IsSuccessful || response.Data == null)
 			{
-				return new UrlData(url, "Error", response.ErrorMessage ?? "Unknown error", "Unknown", string.Empty);
+				var errorMessage = $"Status {(int)response.StatusCode}. {response.Data?.Description ?? "Unspecified error"}.";
+				return new UrlData(url, "Error", errorMessage, "Unknown", string.Empty);
 			}
 
 			if (response.Data.Error.HasValue)
 			{
-				return new UrlData(url, "Error", response.Data.Description, "Unknown", string.Empty);
+				var errorMessage = $"Status {response.Data.Error.Value}. {response.Data?.Description ?? "Unspecified error"}.";
+				return new UrlData(url, "Error", errorMessage, "Unknown", string.Empty);
 			}
 
 			var result =  new UrlData(
