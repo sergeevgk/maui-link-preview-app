@@ -24,19 +24,19 @@
 		</Grid.RowDefinitions>
 
 		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="100" />
+			<ColumnDefinition Width="80" />
 			<!-- Image and Source column -->
 			<ColumnDefinition Width="*" />
 			<!-- Title, URL and Description column -->
-			<ColumnDefinition Width="50" />
+			<ColumnDefinition Width="30" />
 			<!-- Delete button column -->
 		</Grid.ColumnDefinitions>
 
 		<!-- Image from the link preview -->
 		<Image Grid.RowSpan="2"
 			Aspect="AspectFill"
-			HeightRequest="100"
-			WidthRequest="100"
+			HeightRequest="80"
+			WidthRequest="80"
 			x:Name="LinkPreviewImage"
 			Loaded="Image_Loaded">
 			<Image.Source>
@@ -56,6 +56,7 @@
 		<!-- Title of a web page to be opened when tapping on a preview -->
 		<Label
 			Grid.Column="1"
+			Grid.RowSpan="2"
 			Text="{Binding Title}"
 			FontAttributes="Bold"
 			FontSize="Medium"
@@ -78,10 +79,10 @@
 			Grid.Column="1"
 			Grid.ColumnSpan="2"
 			Text="{Binding UrlText}"
-			FontSize="Small"
+			FontSize="Micro"
 			LineBreakMode="TailTruncation"
-			MaxLines="2"
-			VerticalOptions="End" />
+			MaxLines="3"
+			VerticalOptions="Center" />
 
 		<!-- Delete button -->
 		<Button

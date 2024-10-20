@@ -54,10 +54,9 @@
 				HorizontalTextAlignment="Start"
 				VerticalTextAlignment="Start"
 				IsSpellCheckEnabled="False"
-				Keyboard="Url"
 				MaxLength="500"
 				Placeholder="Input your URL here"
-				Text="{Binding EnteredUrl}"
+				Text="{Binding EnteredUrlText}"
 				/>
 
 		<Button 

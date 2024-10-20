@@ -16,11 +16,11 @@ public partial class LinkPreviewCollectionViewModel : INotifyPropertyChanged
 	public ICommand FetchPreviewCommand { get; }
 	public IList<LinkPreviewModel> LinkPreviews { get; set; } = new ObservableCollection<LinkPreviewModel>();
 
-	private string _enteredUrl;
-	public string EnteredUrl
+	private string? _enteredUrlText;
+	public string? EnteredUrlText
 	{
-		get => _enteredUrl;
-		set => SetProperty(ref _enteredUrl, value);
+		get => _enteredUrlText;
+		set => SetProperty(ref _enteredUrlText, value);
 	}
 
 	private int _collectionViewHeight;
@@ -33,26 +33,18 @@ public partial class LinkPreviewCollectionViewModel : INotifyPropertyChanged
 	public LinkPreviewCollectionViewModel(IUrlDataService urlDataService)
 	{
 		_urlDataService = urlDataService ?? throw new ArgumentNullException(nameof(urlDataService));
-		FetchPreviewCommand = new Command(async () => await FetchPreviewAsync(EnteredUrl));
+		FetchPreviewCommand = new Command(async () => await FetchPreviewAsync(EnteredUrlText));
 		CollectionViewHeight = 430;
 	}
 
-	private async Task FetchPreviewAsync(string url)
+	private async Task FetchPreviewAsync(string urlText)
 	{
 		try
 		{
-			var urlData = await _urlDataService.GetUrlDataAsync(url);
+			var urls = urlText.Split(['\n', '\r']);
+			var asyncLoadTasks = urls.Select((url) => FetchAndSaveLinkPreview(url));
 
-			var linkPreview = new LinkPreviewModel
-			{
-				Title = urlData.Title,
-				Description = urlData.Description,
-				UrlText = urlData.Url,
-				Image = urlData.Image,
-				Source = urlData.Source
-			};
-
-			LinkPreviews.Add(linkPreview);
+			await Task.WhenAll(asyncLoadTasks);
 		}
 		catch (Exception ex)
 		{
@@ -65,6 +57,22 @@ public partial class LinkPreviewCollectionViewModel : INotifyPropertyChanged
 
 			LinkPreviews.Add(linkPreview);
 		}
+	}
+
+	private async Task FetchAndSaveLinkPreview(string url)
+	{
+		var urlData = await _urlDataService.GetUrlDataAsync(url);
+
+		var linkPreview = new LinkPreviewModel
+		{
+			Title = urlData.Title,
+			Description = urlData.Description,
+			UrlText = urlData.Url,
+			Image = urlData.Image,
+			Source = urlData.Source
+		};
+
+		LinkPreviews.Add(linkPreview);
 	}
 
 	[RelayCommand]
