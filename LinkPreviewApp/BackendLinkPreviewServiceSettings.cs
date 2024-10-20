@@ -1,6 +1,6 @@
 ﻿namespace LinkPreviewApp;
 
-public class InternalLinkPreviewServiceSettings
+public class BackendLinkPreviewServiceSettings
 {
 	public string BaseUri { get; set; }
 }

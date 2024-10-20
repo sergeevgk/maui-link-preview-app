@@ -40,8 +40,8 @@ namespace LinkPreviewApp
 			using var stream = asm.GetManifestResourceStream(appsettingsFileName);
 			builder.Configuration.AddJsonStream(stream!);
 			var isAndroid = DeviceInfo.Platform == DevicePlatform.Android;
-			builder.Services.AddOptions<InternalLinkPreviewServiceSettings>()
-				.BindConfiguration(isAndroid ? "Android:InternalLinkPreviewService" : "Default:InternalLinkPreviewService");
+			builder.Services.AddOptions<BackendLinkPreviewServiceSettings>()
+				.BindConfiguration(isAndroid ? "Android:BackendLinkPreviewService" : "Default:BackendLinkPreviewService");
 
 
 			return builder.Build();

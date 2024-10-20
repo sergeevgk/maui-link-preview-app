@@ -12,7 +12,7 @@ public class BackendUrlDataService : IUrlDataService
 	private static readonly int MaxRetryAttempts = 2;
 	private static readonly TimeSpan PauseBetweenFailures = TimeSpan.FromSeconds(2);
 
-	public BackendUrlDataService(IOptions<InternalLinkPreviewServiceSettings> settings)
+	public BackendUrlDataService(IOptions<BackendLinkPreviewServiceSettings> settings)
 	{
 		var restClientOptions = new RestClientOptions
 		{
