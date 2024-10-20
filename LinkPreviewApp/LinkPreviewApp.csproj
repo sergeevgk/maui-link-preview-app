@@ -40,7 +40,7 @@
 		<DefaultLanguage>en-US</DefaultLanguage>
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-android|AnyCPU'">
-	  <DefineConstants>$(DefineConstants);USE_BACKEND_SERVICE</DefineConstants>
+	  <!--<DefineConstants>$(DefineConstants);USE_BACKEND_SERVICE</DefineConstants>-->
 	  <ApplicationId>com.companyname.linkpreviewapp</ApplicationId>
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-ios|AnyCPU'">
