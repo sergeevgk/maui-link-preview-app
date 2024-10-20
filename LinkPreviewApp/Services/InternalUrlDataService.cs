@@ -1,4 +1,5 @@
-﻿using Polly;
+﻿using Microsoft.Extensions.Options;
+using Polly;
 using RestSharp;
 
 namespace LinkPreviewApp.Services;
@@ -6,20 +7,18 @@ namespace LinkPreviewApp.Services;
 public class InternalUrlDataService : IUrlDataService
 {
 	private readonly RestClient _httpClient;
-	// TODO: provide a link in settings for Development and Release.
-	private const string ApiUrl = "https://localhost:1234";
 
 	// Retry policy options for connection failures
 	private static readonly int MaxRetryAttempts = 2;
 	private static readonly TimeSpan PauseBetweenFailures = TimeSpan.FromSeconds(2);
 
-	public InternalUrlDataService()
+	public InternalUrlDataService(IOptions<InternalLinkPreviewServiceSettings> settings)
 	{
 		var restClientOptions = new RestClientOptions
 		{
 			FollowRedirects = true,
 			Timeout = TimeSpan.FromSeconds(10),
-			BaseUrl = new Uri(ApiUrl)
+			BaseUrl = new Uri(settings.Value.BaseUri)
 		};
 		_httpClient = new RestClient(restClientOptions);
 	}

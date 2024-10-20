@@ -1,5 +1,8 @@
 ﻿using LinkPreviewApp.Services;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using System.Reflection;
 
 namespace LinkPreviewApp
 {
@@ -17,18 +20,25 @@ namespace LinkPreviewApp
 				});
 
 			builder.Services.AddSingleton<HttpClient>();
-			builder.Services.AddSingleton<IUrlDataService, CustomUrlDataService>();
+			builder.Services.AddSingleton<IUrlDataService, InternalUrlDataService>();
 			builder.Services.AddTransient<AppShell>();
 			builder.Services.AddTransient<MainPage>();
 			builder.Services.AddTransient<LinkPreviewModel>();
 			builder.Services.AddTransient<LinkPreviewCollectionViewModel>();
 
-			// Read the service url from some env variable?
+			var asm = Assembly.GetExecutingAssembly();// for appsettings.json included in MAUI project as __Embedded Resource__ (important!)
 
-
+			string appsettingsFileName = $"{asm.GetName().Name}.appsettings.json";
 #if DEBUG
 			builder.Logging.AddDebug();
+			appsettingsFileName = $"{asm.GetName().Name}.appsettings.Development.json";
 #endif
+			using var stream = asm.GetManifestResourceStream(appsettingsFileName);
+			builder.Configuration.AddJsonStream(stream!);
+			var isAndroid = DeviceInfo.Platform == DevicePlatform.Android;
+			builder.Services.AddOptions<InternalLinkPreviewServiceSettings>()
+				.BindConfiguration(isAndroid ? "Android:InternalLinkPreviewService" : "Default:InternalLinkPreviewService");
+
 
 			return builder.Build();
 		}
