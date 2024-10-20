@@ -4,7 +4,7 @@ using RestSharp;
 
 namespace LinkPreviewApp.Services;
 
-public class InternalUrlDataService : IUrlDataService
+public class BackendUrlDataService : IUrlDataService
 {
 	private readonly RestClient _httpClient;
 
@@ -12,7 +12,7 @@ public class InternalUrlDataService : IUrlDataService
 	private static readonly int MaxRetryAttempts = 2;
 	private static readonly TimeSpan PauseBetweenFailures = TimeSpan.FromSeconds(2);
 
-	public InternalUrlDataService(IOptions<InternalLinkPreviewServiceSettings> settings)
+	public BackendUrlDataService(IOptions<InternalLinkPreviewServiceSettings> settings)
 	{
 		var restClientOptions = new RestClientOptions
 		{
