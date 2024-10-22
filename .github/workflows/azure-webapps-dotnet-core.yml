@@ -86,8 +86,8 @@ jobs:
         working-directory: .
         run: |
           ls
-          ls LinkPreviewApp.ApiService/
           ls LinkPreviewApp.ApiService
+          ls /LinkPreviewApp.ApiService
 
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
