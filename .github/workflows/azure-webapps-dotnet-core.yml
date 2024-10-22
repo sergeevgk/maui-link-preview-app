@@ -83,11 +83,9 @@ jobs:
           name: .net-app
 
       - name: list-files
-        working-directory: ../
+        working-directory: .
         run: |
           ls
-          ls ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/myapp
-          ls ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/publish
 
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
