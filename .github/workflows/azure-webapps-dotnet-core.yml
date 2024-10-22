@@ -76,7 +76,6 @@ jobs:
     environment:
       name: 'Development'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
-
     steps:
       - name: Download artifact from build job
         uses: actions/download-artifact@v3
@@ -84,6 +83,7 @@ jobs:
           name: .net-app
 
       - name: list-files
+        working-directory: ../
         run: |
           ls
           ls ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/myapp
