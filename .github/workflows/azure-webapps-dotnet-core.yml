@@ -37,42 +37,42 @@ permissions:
   contents: read
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
+  # build:
+  #   runs-on: ubuntu-latest
 
-    steps:
-      - uses: actions/checkout@v4
+  #   steps:
+  #     - uses: actions/checkout@v4
 
-      - name: Set up .NET Core
-        uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: ${{ env.DOTNET_VERSION }}
+  #     - name: Set up .NET Core
+  #       uses: actions/setup-dotnet@v4
+  #       with:
+  #         dotnet-version: ${{ env.DOTNET_VERSION }}
 
-      - name: Set up dependency caching for faster builds
-        uses: actions/cache@v3
-        with:
-          path: ~/.nuget/packages
-          key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-nuget-
+  #     - name: Set up dependency caching for faster builds
+  #       uses: actions/cache@v3
+  #       with:
+  #         path: ~/.nuget/packages
+  #         key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
+  #         restore-keys: |
+  #           ${{ runner.os }}-nuget-
 
-      - name: Build with dotnet
-        run: dotnet build --configuration Release
+  #     - name: Build with dotnet
+  #       run: dotnet build --configuration Release
 
-      - name: dotnet publish
-        run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
+  #     - name: dotnet publish
+  #       run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
 
-      - name: Upload artifact for deployment job
-        uses: actions/upload-artifact@v3
-        with:
-          name: .net-app
-          path: ${{env.DOTNET_ROOT}}/myapp
+  #     - name: Upload artifact for deployment job
+  #       uses: actions/upload-artifact@v3
+  #       with:
+  #         name: .net-app
+  #         path: ${{env.DOTNET_ROOT}}/myapp
 
   deploy:
     permissions:
       contents: none
     runs-on: ubuntu-latest
-    needs: build
+    # needs: build
     environment:
       name: 'Development'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
@@ -86,7 +86,8 @@ jobs:
         working-directory: .
         run: |
           ls
-          ls ./LinkPreviewApp.ApiService/LinkPreviewApp.ApiService
+          ls ../
+          ls /LinkPreviewApp.ApiService
 
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
