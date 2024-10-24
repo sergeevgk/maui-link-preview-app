@@ -51,6 +51,8 @@
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-android|AnyCPU'">
 	  <ApplicationId>com.companyname.linkpreviewapp</ApplicationId>
+	  <AndroidSigningKeyStore>mauilinkpreview.keystore</AndroidSigningKeyStore>
+	  <AndroidSigningKeyAlias>mauilinkpreview</AndroidSigningKeyAlias>
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-ios|AnyCPU'">
 	  <ApplicationId>com.companyname.linkpreviewapp</ApplicationId>
