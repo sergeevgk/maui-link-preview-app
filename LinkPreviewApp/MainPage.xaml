@@ -5,7 +5,7 @@
 			 x:Class="LinkPreviewApp.MainPage"
 			 Title="LinkPreviewApp">
 
-	<Grid RowDefinitions="Auto, *, Auto, Auto, Auto" Padding="30,0" RowSpacing="10">
+	<Grid RowDefinitions="Auto, *, Auto, Auto, Auto" Padding="20,0" RowSpacing="10">
 		<Label 
 				Grid.Row="0"
 				x:Name="urlPreviewText"
@@ -33,11 +33,6 @@
 					VerticalTextAlignment="Center"
 					/>
 			</CollectionView.EmptyView>
-			<CollectionView.ItemsLayout>
-				<LinearItemsLayout Orientation="Vertical"
-							SnapPointsType="Mandatory"
-							SnapPointsAlignment="End" />
-			</CollectionView.ItemsLayout>
 		</CollectionView>
 
 		<Label
