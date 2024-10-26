@@ -39,3 +39,8 @@ Register on https://www.linkpreview.net/, obtain an API Key and provide it in th
 - [Polly](https://github.com/App-vNext/Polly)
 - [RestSharp](https://github.com/RestSharp/RestSharp)
 - [.NET Community Toolkit](https://github.com/CommunityToolkit/dotnet), [MVVM Toolkit Samples](https://github.com/CommunityToolkit/MVVM-Samples)
+
+
+## Samples (screenshot and a small gif overview)
+[Application UI for an Android device](LinkPreviewApp/Samples/app-screenshot.jpg)
+[Application work process](LinkPreviewApp/Samples/app-demo.gif)
