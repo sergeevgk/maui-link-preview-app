@@ -40,7 +40,10 @@ Register on https://www.linkpreview.net/, obtain an API Key and provide it in th
 - [RestSharp](https://github.com/RestSharp/RestSharp)
 - [.NET Community Toolkit](https://github.com/CommunityToolkit/dotnet), [MVVM Toolkit Samples](https://github.com/CommunityToolkit/MVVM-Samples)
 
-
-## Samples (screenshot and a small gif overview)
-[Application UI for an Android device](LinkPreviewApp/Samples/app-screenshot.jpg)
-[Application work process](LinkPreviewApp/Samples/app-demo.gif)
+## Samples
+<img src="LinkPreviewApp/Samples/app-screenshot.jpg" width="300" alt="Application UI for an Android device" />
+<details>
+  <summary>Application preview (GIF)</summary>
+  <br/>
+  <img src="LinkPreviewApp/Samples/app-demo.gif" width="300" alt="Application work process" />
+</details>
